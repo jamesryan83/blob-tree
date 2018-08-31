@@ -1,6 +1,4 @@
 
-// Notes
-
 // Blob tree options
 interface BlobTreeOptions {
     treeEl: string,
