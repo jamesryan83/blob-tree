@@ -839,7 +839,7 @@ describe("BlobTree", () => {
 
     // --------------------- Other functions  ---------------------
 
-    // returns a new SpaceBackground
+    // returns a new BlobTree
     function getBlobTree(options): BlobTree {
         return new karmaHTML[0].document.defaultView.BlobTree(options);
     }
