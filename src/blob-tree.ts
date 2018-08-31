@@ -40,7 +40,7 @@ class BlobTree {
     }
 
 
-    // Formats a raw BlobList from azure into a folder structure
+    // Formats a raw blob list from azure into a folder structure
     formatBlobsForTree (blobList: any[]) {
         if (!blobList || blobList.length === 0) return [];
 
@@ -207,7 +207,7 @@ class BlobTree {
     }
 
 
-    // Deselectes all items and sets the selected item
+    // Deselects all items and sets the selected item
     setSelectedItem (item: TreeItem) {
         if (item && item.isSelected) return;
 
