@@ -1,0 +1,92 @@
+
+$colorHover: #dadada;
+$colorHoverText: #313131;
+$colorSelected: #8d8d8d;
+$colorSelectedText: #474747;
+$colorItem: #9d9d9d;
+$colorFolder: rgb(100, 100, 100);
+
+// ul
+#blob-tree {
+    user-select: none;
+    list-style: none;
+    padding: 10px 0;
+
+    // A single tree item
+    li {
+        display: none;
+        cursor: pointer;
+        padding: 0 10px;
+
+
+        > label {
+            user-select: none;
+            display: block;
+            font-size: 13px;
+            pointer-events: none;
+            height: 24px;
+            line-height: 24px;
+            color: $colorItem;
+            letter-spacing: 1px;
+        }
+
+
+        // tree item is a folder
+        &.isFolder {
+            position: relative;
+
+            > label {
+                font-weight: bold;
+                color: $colorFolder;
+            }
+
+            // folder arrow
+            &:before {
+                width: 0;
+                height: 0;
+                content: "";
+                margin-top: 7px;
+                margin-left: -15px;
+                position: absolute;
+                border-top: 5px solid transparent;
+                border-left: 7px solid $colorFolder;
+                border-bottom: 5px solid transparent;
+            }
+
+            &.isExpanded {
+                &:before {
+                    transform: rotate(50deg);
+                }
+            }
+        }
+
+
+        // other tree item classes
+
+        &.isSelected {
+            font-weight: bold;
+            background-color: $colorSelected;
+
+            > label {
+                color: $colorSelectedText;
+            }
+        }
+
+        &.isVisible {
+            display: block;
+        }
+
+        &.isRoot {
+            display: block;
+        }
+
+        &:hover {
+            background-color: $colorHover;
+
+            > label {
+                color: $colorHoverText;
+            }
+        }
+    }
+
+}

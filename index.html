@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>blob-tree.js demo</title>
+
+        <style>
+            html, body {
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                height: 100%;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
+            body {
+                background-color: #371750;
+                text-align: center;
+                overflow-y: scroll;
+            }
+
+            h1, h3, pre {
+                color: lightgray;
+            }
+
+            h1 {
+                margin-top: 60px;
+            }
+
+            p {
+                color: rgb(179, 178, 178);
+                margin-bottom: 50px;
+            }
+
+            .demo-button {
+                border: none;
+                width: 130px;
+                padding: 5px 10px;
+                border-radius: 2px;
+                background-color: #179e61;
+                margin: 0 10px;
+                color: lightgray;
+                font-size: 12px;
+                cursor: pointer;
+            }
+
+            .demo-button:hover {
+                background-color: #19b971;
+            }
+
+            #page-container {
+                display: inline-block;
+            }
+
+            #example-data > pre {
+                text-align: left;
+            }
+
+            #example-data, #example-output {
+                width: 470px;
+                display: inline-block;
+                vertical-align: top;
+            }
+
+            #blob-tree {
+                display: inline-block;
+                width: 300px;
+                text-align: left;
+            }
+
+            @media (max-width: 850px) {
+                #example-data, #example-output {
+                    display: block;
+                }
+            }
+        </style>
+
+        <link rel="stylesheet" href="dist/blob-tree.css" />
+    </head>
+
+    <body>
+        <div id="page-container">
+            <h1>blob-tree.js</h1>
+
+            <p>Converts a list of items from azure blob storage into a file/folder tree</p>
+
+            <div id="example-data">
+                <h3>Example Data</h3>
+                <pre>
+[
+    { "name": "folder1/__fld__" },
+    { "name": "folder1/file1.html" },
+    { "name": "folder1/file2.html" },
+    { "name": "folder1/file3.html" },
+    { "name": "folder1/folder1/__fld__" },
+    { "name": "folder1/folder1/file1.html" },
+    { "name": "folder1/folder1/file2.html" },
+    { "name": "folder1/folder1/folder1/__fld__" },
+    { "name": "folder1/folder1/folder1/file1.html" },
+    { "name": "folder1/folder2/__fld__" },
+    { "name": "folder1/folder2/folder1/__fld__" },
+    { "name": "folder1/folder2/folder1/file1.html" },
+    { "name": "folder1/folder2/folder1/folder1/__fld__" },
+    { "name": "folder1/folder2/folder1/folder1/file1.html" },
+    { "name": "folder1/folder3/__fld__" },
+    { "name": "folder1/folder3/file1.html" }
+]
+                </pre>
+            </div>
+
+            <div id="example-output">
+                <h3>Example Output</h3>
+
+                <button class="demo-button" id="delete-file">DELETE FILE</button>
+                <button class="demo-button" id="delete-folder">DELETE FOLDER</button>
+                <button class="demo-button" id="reload">RELOAD</button>
+
+                <div id="blob-tree"></div>
+            </div>
+        </div>
+
+        <script src="dist/blob-tree.min.js"></script>
+
+        <script>
+
+            // create a new blob tree
+            function createTree() {
+                var blobTree = new BlobTree({
+                    treeEl: "blob-tree",
+                    folderFile: "__fld__",
+                    itemClicked: function (item) {
+                        console.log(item);
+                    }
+                });
+
+                blobTree.createTree(fakeData);
+
+                return blobTree;
+            }
+
+
+            window.onload = function () {
+                var blobTree = createTree();
+
+                // demo button events
+                document.getElementById("delete-file").addEventListener("click", function (e) {
+                    var item = blobTree.getSelectedItem();
+                    blobTree.removeFile(item.path);
+                });
+
+                document.getElementById("delete-folder").addEventListener("click", function (e) {
+                    var item = blobTree.getSelectedItem();
+                    blobTree.removeFolder(item.path);
+                });
+
+                document.getElementById("reload").addEventListener("click", function (e) {
+                    blobTree = createTree();
+                });
+            }
+
+
+            var fakeData = [
+                { "name": "folder1/__fld__" },
+                { "name": "folder1/file1.html" },
+                { "name": "folder1/file2.html" },
+                { "name": "folder1/file3.html" },
+                { "name": "folder1/folder1/__fld__" },
+                { "name": "folder1/folder1/file1.html" },
+                { "name": "folder1/folder1/file2.html" },
+                { "name": "folder1/folder1/folder1/__fld__" },
+                { "name": "folder1/folder1/folder1/file1.html" },
+                { "name": "folder1/folder2/__fld__" },
+                { "name": "folder1/folder2/folder1/__fld__" },
+                { "name": "folder1/folder2/folder1/file1.html" },
+                { "name": "folder1/folder2/folder1/folder1/__fld__" },
+                { "name": "folder1/folder2/folder1/folder1/file1.html" },
+                { "name": "folder1/folder3/__fld__" },
+                { "name": "folder1/folder3/file1.html" }
+        ]
+
+        </script>
+    </body>
+</html>
